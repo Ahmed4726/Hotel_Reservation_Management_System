@@ -1,0 +1,23 @@
+Developer Account:
+Email: Systrix12@gmail.com
+Password: Systrix12@
+
+https://www.sandbox.paypal.com/signin
+
+Sandbox - Personal:
+sb-dds43j28301723@personal.example.com
+dK4iX^h6
+
+Sandbox - Business:
+sb-ugwul26154198@business.example.com
+1C#s-?QY
+
+API Credential:
+App Name: Hotel_App_New
+sb-ugwul26154198@business.example.com
+Client ID:
+Aa8ixeF4OZjNTI4ZVC8OpqKDRry8R0xZonHZwbMzhVHVAcN7aunraEEl9MuhgvCfl4S5Z_cK6YQo8Byi
+Secret key 1:
+EKSi39RETNfmHEjh5qiEZZnsAJHKSpuBJTVu5Xw9rDxsC-WfaCp43m_wO5o_5NPwcBII7oflcAyrc64n
+
+
