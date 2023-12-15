@@ -17,6 +17,7 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\Transaction;
 use App\Mail\Websitemail;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 //use Illuminate\Support\Facades\Stripe;
 Use Stripe;
 
@@ -25,14 +26,31 @@ class BookingController extends Controller
     public function cart_submit(Request $request){
 
             
-        $request->validate([
-
-            // 'room_id'=>'required',
-            'checkin_checkout'=>'required',
-            'adult'=>'required'
-      
-        
-        ]);
+      $request->validate([
+         'checkin_checkout' => 'required',
+         'adult' => [
+             'required',
+             'numeric',
+             'min:1',
+             function ($attribute, $value, $fail) use ($request) {
+                 $room = Room::find($request->input('room_id'));
+     
+                 if (!$room) {
+                     $fail('Room not found.');
+                     return;
+                 }
+     
+                 $totalGuests = $value + $request->input('children', 0);
+     
+                 if ($totalGuests > $room->total_guests) {
+                     $fail('The total number of guests (adults + children) exceeds the maximum capacity for this room.');
+                     return;
+                 }
+             },
+         ],
+         'room_id' => 'required|exists:rooms,id',
+     ]);
+     
         
             
             $dates=explode(' - ',$request->checkin_checkout);
@@ -310,6 +328,7 @@ class BookingController extends Controller
                   $obj->subtotal=$sub;
                   $obj->save();
    
+                  $status = Room::where('id', $arr_cart_room_id[$i])->update(['status' => 'Booked']);
 
 
                }
@@ -466,9 +485,10 @@ class BookingController extends Controller
                $obj->save();
 
 
+               $status = Room::where('id', $arr_cart_room_id[$i])->update(['status' => 'Booked']);
 
             }
-
+           
             $subject='New Order';
             $message='You have made an order for hotel booking.The booking information is given below: <br>';
             $message .='<br>Order No: '.$order_no;
@@ -492,7 +512,7 @@ class BookingController extends Controller
         
           
             $customer_email=Auth::guard('customer')->user()->email;
-          
+            
             Mail::to($customer_email)->send(new Websitemail($subject,$message));
         
               session()->forget('cart_room_id');
@@ -521,9 +541,18 @@ class BookingController extends Controller
              $checkinCheckout = $request->checkin_checkout;
              $adults = $request->adult;
              $children = $request->children;
-         
+             $current_date = Carbon::now()->format('d/m/Y');
              // You may need to modify the logic here based on your actual data model and conditions
-             $rooms = Room::where('total_guests', '>=', $adults + $children)
+             $rooms = DB::table('rooms')
+             ->leftJoin('order_details', function ($join) {
+                 $join->on('order_details.room_id', '=', 'rooms.id')
+                      ->where('order_details.checkout_date', '=', DB::raw("(SELECT MAX(checkout_date) FROM order_details WHERE order_details.room_id = rooms.id)"));
+             })
+             ->where('order_details.checkout_date', '<=', $current_date)
+             ->where('rooms.status', '=', 'Available')
+             ->where('total_guests', '>=', $adults + $children)
+             ->groupBy('rooms.id')
+             ->select('rooms.*') // Select the columns from the 'rooms' table
                //   ->limit(4) // Assuming you want to show only 4 available rooms
                  ->get();
          

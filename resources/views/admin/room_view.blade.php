@@ -26,6 +26,7 @@
                                 <th>Photo</th>
                                 <th>Name</th>
                                 <th>Price(per night)</th>
+                                <th>Room Status</th>
                                 <th>Action</th>
                              </tr>
                             </thead>
@@ -41,7 +42,8 @@
                                 </td>
                                 <td>{{ @$row->name }}</td>
                                 <td>MYR{{ $row->price }}</td>
-                                <td class="pt_10 pb_10">
+                                <td style="width:10%;">{{ $row->status }}</td>
+                                <td class="pt_10 pb_10 py_10">
                                     <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModal{{ $i }}">Detail</button>
                                     
                                     <a href="{{ route('admin_room_gallery',$row->id) }}" class="btn btn-success" >Gallery</a>
