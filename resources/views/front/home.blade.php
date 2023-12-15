@@ -104,9 +104,6 @@
                     <h2 class="main-header" data-aos="fade-down" data-aos-duration="1000">Hotel Accomodation</h2>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
             <div class="row row-rooms">
                 @if(isset($room_all))
                 @foreach ($room_all as $item)

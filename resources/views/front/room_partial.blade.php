@@ -8,12 +8,12 @@
                             <img src="{{ asset('uploads/' . $room->featured_photo) }}" alt="" style="width: 490px;">
                         </div>
                         <div class="text">
-                            <h2><a href="{{ route('room_detail', $room->id) }}" style="color:black;">{{ $room->name }}</a></h2>
-                            <div class="price" style="color:#e75542;">
+                            <h2><a href="{{ route('room_detail', $room->id) }}">{{ $room->name }}</a></h2>
+                            <div class="price">
                                 MYR{{ $room->price }}/night
                             </div>
                             <div class="button">
-                                <a href="{{ route('room_detail', $room->id) }}" class="btn btn-primary" style= "background: #e75542; color: white;">See Detail</a>
+                                <a href="{{ route('room_detail', $room->id) }}" class="btn btn-primary">See Detail</a>
                             </div>
                         </div>
                     </div>
@@ -29,12 +29,12 @@
                             <img src="{{ asset('uploads/' . $room->featured_photo) }}" alt="" style="width: 300px;">
                         </div>
                         <div class="text">
-                            <h2><a href="{{ route('room_detail', $room->id) }}" style="color:black;">{{ $room->name }}</a></h2>
-                            <div class="price" style="color:#e75542;">
+                            <h2><a href="{{ route('room_detail', $room->id) }}">{{ $room->name }}</a></h2>
+                            <div class="price">
                                 MYR{{ $room->price }}/night
                             </div>
                             <div class="button">
-                                <a href="{{ route('room_detail', $room->id) }}" class="btn btn-primary" style= "background: #e75542; color: white;">See Detail</a>
+                                <a href="{{ route('room_detail', $room->id) }}" class="btn btn-primary">See Detail</a>
                             </div>
                         </div>
                     </div>
