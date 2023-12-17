@@ -201,6 +201,9 @@
                     <h2 class="main-header">Latest Posts</h2>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
             <div class="row">
 
                 @foreach ($post_all as $item)

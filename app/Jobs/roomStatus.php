@@ -35,10 +35,13 @@ class roomStatus implements ShouldQueue
     {
         $current_date = Carbon::now()->format('d/m/Y');
     
-        DB::table('order_details')
-            ->join('rooms', 'order_details.room_id', '=', 'rooms.id')
-            ->where('order_details.checkout_date', '>', $current_date)
-            ->update(['rooms.status' => 'Available']);
+    DB::table('rooms')
+        ->leftJoin('order_details', function ($join) {
+            $join->on('order_details.room_id', '=', 'rooms.id')
+                 ->where('order_details.checkout_date', '=', DB::raw("(SELECT MAX(checkout_date) FROM order_details WHERE order_details.room_id = rooms.id)"));
+        })
+        ->where('order_details.checkout_date', '<', $current_date)
+        ->update(['rooms.status' => 'Available']);
     }
     
 
