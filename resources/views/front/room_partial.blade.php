@@ -9,7 +9,7 @@
             <div class="{{ $columnClass }}" style="margin-top: 10%;">
                 <div class="inner" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="500">
                     <div class="photo">
-                        <img src="{{ asset('uploads/' . $room->featured_photo) }}" alt="" style="width: {{ $columnClass == 'col-md-12' ? '100%' : '490px' }};">
+                        <img src="{{ asset('uploads/' . $room->featured_photo) }}" alt="" style="width: {{ $columnClass == 'col-md-4' ? '100%' : '490px' }};">
                     </div>
                     <div class="text">
                         <h2 class="text-center mt-3"><a href="{{ route('room_detail', $room->id) }}" style="color:black;">{{ $room->name }}</a></h2>
